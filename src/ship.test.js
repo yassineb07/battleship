@@ -1,4 +1,4 @@
-import { Ship } from './ship';
+import Ship from './ship';
 
 // length prop tests
 describe('length prop tests', () => {

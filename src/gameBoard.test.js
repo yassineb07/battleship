@@ -1,5 +1,5 @@
-import { GameBoard } from './gameBoard';
-import { Ship } from './ship';
+import GameBoard from './gameBoard';
+import Ship from './ship';
 
 const game = GameBoard();
 

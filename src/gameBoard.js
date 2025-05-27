@@ -83,4 +83,4 @@ function GameBoard() {
   };
 }
 
-export { GameBoard };
+export default GameBoard;

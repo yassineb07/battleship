@@ -17,4 +17,4 @@ function Ship(id, length) {
   return { id, length, getHitCount, hit, isSunk };
 }
 
-export { Ship };
+export default Ship;
