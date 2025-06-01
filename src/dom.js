@@ -33,7 +33,12 @@ const Dom = () => {
     }
   };
 
-  return { clearBoard, enableBoard, disableBoard, renderBoard };
+  const displayWinner = (name) => {
+    const notifTextEl = document.getElementById('notifText');
+    notifTextEl.textContent = name + ' Wins!';
+  };
+
+  return { clearBoard, enableBoard, disableBoard, renderBoard, displayWinner };
 };
 
 export default Dom;

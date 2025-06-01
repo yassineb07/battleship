@@ -101,7 +101,7 @@ body {
 main {
   height: 90%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr 2fr;
 }
 
 section {
@@ -110,6 +110,15 @@ section {
   align-items: center;
   padding: 1rem;
   gap: 2rem;
+}
+
+.notif {
+  align-items: center;
+}
+
+.notif-text {
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .player-name {

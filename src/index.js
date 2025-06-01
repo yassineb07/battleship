@@ -15,20 +15,20 @@ let currentPlayer = 1;
 const ships = [
   Ship('ship1', 1),
   Ship('ship2', 2),
-  Ship('ship3', 3),
-  Ship('ship4', 4),
+  //Ship('ship3', 3),
+  //Ship('ship4', 4),
 ];
 
 const initShips = () => {
   player1.placeShip(ships[0], [0, 0]);
   player1.placeShip(ships[1], [1, 3]);
-  player1.placeShip(ships[2], [4, 4]);
-  player1.placeShip(ships[3], [8, 1]);
+  //player1.placeShip(ships[2], [4, 4]);
+  //player1.placeShip(ships[3], [8, 1]);
 
   player2.placeShip(ships[0], [8, 7]);
   player2.placeShip(ships[1], [1, 3]);
-  player2.placeShip(ships[2], [3, 3]);
-  player2.placeShip(ships[3], [6, 3]);
+  //player2.placeShip(ships[2], [3, 3]);
+  //player2.placeShip(ships[3], [6, 3]);
 };
 
 const initGame = () => {
@@ -57,7 +57,7 @@ player1BoardEl.addEventListener('click', (e) => {
   dom.clearBoard(player1BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
   if (player1.hasLost()) {
-    alert('Player 2 wins');
+    dom.displayWinner(player2.getName());
     dom.disableBoard(player1BoardEl);
     dom.disableBoard(player2BoardEl);
     return;
@@ -72,7 +72,7 @@ player2BoardEl.addEventListener('click', (e) => {
   dom.clearBoard(player2BoardEl);
   dom.renderBoard(player2BoardEl, player2.getBoard());
   if (player2.hasLost()) {
-    alert('Player 1 wins!');
+    dom.displayWinner(player1.getName());
     dom.disableBoard(player1BoardEl);
     dom.disableBoard(player2BoardEl);
     return;
