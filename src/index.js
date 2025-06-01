@@ -10,7 +10,7 @@ const player2BoardEl = document.getElementById('player2GameBoardEl');
 const resetBtn = document.getElementById('resetBtn');
 
 const player1 = Player('player1', GameBoard());
-const player2 = Player('player2', GameBoard());
+const player2 = Player('computer', GameBoard());
 let currentPlayer = 1;
 
 const ships = [
@@ -40,6 +40,25 @@ const initGame = () => {
   dom.disableBoard(player1BoardEl);
 };
 
+const computerPlay = () => {
+  let x, y;
+  do {
+    x = Math.floor(Math.random() * 10);
+    y = Math.floor(Math.random() * 10);
+  } while (player1.getHits().includes([x, y].toString()));
+
+  player1.receiveAttack([x, y]);
+  dom.clearBoard(player1BoardEl);
+  dom.renderBoard(player1BoardEl, player1.getBoard());
+  if (player1.hasLost()) {
+    dom.displayWinner(player2.getName());
+    dom.disableBoard(player1BoardEl);
+    dom.disableBoard(player2BoardEl);
+    return;
+  }
+  switchTurn();
+};
+
 const switchTurn = () => {
   currentPlayer = currentPlayer === 1 ? 2 : 1;
   if (currentPlayer === 1) {
@@ -51,7 +70,7 @@ const switchTurn = () => {
   }
 };
 
-player1BoardEl.addEventListener('click', (e) => {
+/* player1BoardEl.addEventListener('click', (e) => {
   if (currentPlayer !== 2) return;
   const coord = e.target.id.split(',').map(Number);
   player1.receiveAttack(coord);
@@ -64,7 +83,7 @@ player1BoardEl.addEventListener('click', (e) => {
     return;
   }
   switchTurn();
-});
+}); */
 
 player2BoardEl.addEventListener('click', (e) => {
   if (currentPlayer !== 1) return;
@@ -79,6 +98,7 @@ player2BoardEl.addEventListener('click', (e) => {
     return;
   }
   switchTurn();
+  setTimeout(computerPlay, 500);
 });
 
 resetBtn.addEventListener('click', () => {
