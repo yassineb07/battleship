@@ -121,6 +121,11 @@ section {
   font-weight: 600;
 }
 
+.reset-btn {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .player-name {
   font-size: 2rem;
   font-weight: 700;

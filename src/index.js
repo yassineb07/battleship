@@ -7,6 +7,7 @@ import Dom from './dom';
 const dom = Dom();
 const player1BoardEl = document.getElementById('player1GameBoardEl');
 const player2BoardEl = document.getElementById('player2GameBoardEl');
+const resetBtn = document.getElementById('resetBtn');
 
 const player1 = Player('player1', GameBoard());
 const player2 = Player('player2', GameBoard());
@@ -78,6 +79,10 @@ player2BoardEl.addEventListener('click', (e) => {
     return;
   }
   switchTurn();
+});
+
+resetBtn.addEventListener('click', () => {
+  location.reload();
 });
 
 initGame();
