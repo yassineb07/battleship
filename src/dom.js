@@ -21,13 +21,20 @@ const Dom = () => {
     boardEl.style.opacity = '0.5';
   };
 
+  const renderShots = (gameBoardEl, shots) => {
+    shots.forEach((obj) => {
+      const cell = gameBoardEl.children.namedItem(obj.coord);
+      cell.setAttribute('data-shot', obj.type);
+    });
+  };
+
   const renderBoard = (gameBoardEl, gameBoard) => {
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         const value = gameBoard[i][j];
         const cellEl = createBoardCell();
         cellEl.id = [i, j].toString();
-        cellEl.setAttribute('data', value);
+        cellEl.setAttribute('data-ship', value);
         gameBoardEl.appendChild(cellEl);
       }
     }
@@ -43,6 +50,7 @@ const Dom = () => {
     enableBoard,
     disableBoard,
     renderBoard,
+    renderShots,
     showGameStatus,
   };
 };

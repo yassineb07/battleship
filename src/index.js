@@ -39,6 +39,8 @@ const initGame = () => {
   dom.clearBoard(player2BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
   dom.renderBoard(player2BoardEl, player2.getBoard());
+  dom.renderShots(player1BoardEl, player1.getShots());
+  dom.renderShots(player2BoardEl, player2.getShots());
   dom.enableBoard(player2BoardEl);
   dom.disableBoard(player1BoardEl);
   dom.showGameStatus('Game Started');
@@ -49,13 +51,14 @@ const computerPlay = () => {
   do {
     x = Math.floor(Math.random() * 10);
     y = Math.floor(Math.random() * 10);
-  } while (player1.getHits().includes([x, y].toString()));
+  } while (player1.getShots().some((obj) => obj.coord === [x, y].toString()));
 
   player1.receiveAttack([x, y]);
   dom.clearBoard(player1BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
+  dom.renderShots(player1BoardEl, player1.getShots());
   if (player1.hasLost()) {
-    dom.displayWinner(player2.getName());
+    dom.showGameStatus(`${player2.getName()} Wins`);
     dom.disableBoard(player1BoardEl);
     dom.disableBoard(player2BoardEl);
     return;
@@ -83,6 +86,7 @@ const placeShips = (e) => {
   playerShips.shift();
   dom.clearBoard(player1BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
+  dom.renderShots(player1BoardEl, player1.getShots());
   if (playerShips.length === 0) {
     placingShips = false;
     player1BoardEl.removeEventListener('click', placeShips);
@@ -94,6 +98,8 @@ const placeShips = (e) => {
 
 dom.renderBoard(player1BoardEl, player1.getBoard());
 dom.renderBoard(player2BoardEl, player2.getBoard());
+dom.renderShots(player1BoardEl, player1.getShots());
+dom.renderShots(player2BoardEl, player2.getShots());
 dom.showGameStatus('Place your ships');
 
 player1BoardEl.addEventListener('click', placeShips);
@@ -104,6 +110,7 @@ player2BoardEl.addEventListener('click', (e) => {
   player2.receiveAttack(coord);
   dom.clearBoard(player2BoardEl);
   dom.renderBoard(player2BoardEl, player2.getBoard());
+  dom.renderShots(player2BoardEl, player2.getShots());
   if (player2.hasLost()) {
     dom.showGameStatus(`${player1.getName()} Wins`);
     dom.disableBoard(player1BoardEl);
