@@ -144,10 +144,17 @@ section {
   border: solid black 1px;
 }
 
-div[data^='ship'] {
-  background-color: red;
+.player1-game-board div[data-ship^='ship'] {
+  background-color: blue;
 }
 
-div[data^='missed'] {
+.player1-game-board div[data-ship^='ship'][data-shot='hit'] {
+  background-color: brown;
+}
+
+div[data-shot='hit'] {
+  background-color: brown;
+}
+div[data-shot='miss'] {
   background-color: grey;
 }
