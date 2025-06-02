@@ -4,14 +4,14 @@ function GameBoard() {
     .map(() => Array(10).fill(null));
 
   const ships = [];
-  const hits = [];
+  const shots = [];
 
   const getShips = () => {
     return ships;
   };
 
-  const getHits = () => {
-    return hits;
+  const getShots = () => {
+    return shots;
   };
 
   const getBoard = () => {
@@ -56,17 +56,15 @@ function GameBoard() {
   };
 
   const receiveAttack = ([x, y]) => {
-    if (hits.includes([x, y].toString())) return;
+    if (shots.some((obj) => obj.coord === [x, y].toString())) return;
     if (isBoardCellEmpty([x, y])) {
-      setBoardCell([x, y], 'missed');
-    } else if (
-      !(isBoardCellEmpty([x, y]) && getBoardCell([x, y]) === 'missed')
-    ) {
+      shots.push({ type: 'miss', coord: [x, y].toString() });
+    } else {
       const shipId = getBoardCell([x, y]);
       const ship = ships.find((ship) => ship.id === shipId);
       ship.hit();
+      shots.push({ type: 'hit', coord: [x, y].toString() });
     }
-    hits.push([x, y].toString());
   };
 
   const hasLost = () => {
@@ -75,7 +73,7 @@ function GameBoard() {
 
   return {
     getShips,
-    getHits,
+    getShots,
     getBoard,
     hasLost,
     placeShip,

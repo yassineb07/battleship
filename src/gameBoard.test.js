@@ -39,9 +39,15 @@ describe('receiveAttack method tests', () => {
     game.receiveAttack([0, 0]);
     game.receiveAttack([3, 2]);
     game.receiveAttack([9, 8]);
-    expect(game.getBoard()[0][0]).toBe('missed');
-    expect(game.getBoard()[3][2]).toBe('missed');
-    expect(game.getBoard()[9][8]).toBe('missed');
+    expect(
+      game.getShots().find((obj) => obj.coord === [0, 0].toString()).type,
+    ).toBe('miss');
+    expect(
+      game.getShots().find((obj) => obj.coord === [3, 2].toString()).type,
+    ).toBe('miss');
+    expect(
+      game.getShots().find((obj) => obj.coord === [9, 8].toString()).type,
+    ).toBe('miss');
   });
 
   test('Hit ship', () => {
@@ -49,9 +55,18 @@ describe('receiveAttack method tests', () => {
     expect(game.getShips()[1].getHitCount()).toBe(0);
     game.receiveAttack([5, 5]);
     game.receiveAttack([6, 6]);
+    expect(
+      game.getShots().find((obj) => obj.coord === [5, 5].toString()).type,
+    ).toBe('hit');
+    expect(
+      game.getShots().find((obj) => obj.coord === [6, 6].toString()).type,
+    ).toBe('hit');
     expect(game.getShips()[0].getHitCount()).toBe(1);
     expect(game.getShips()[1].getHitCount()).toBe(1);
     game.receiveAttack([6, 7]);
+    expect(
+      game.getShots().find((obj) => obj.coord === [6, 7].toString()).type,
+    ).toBe('hit');
     expect(game.getShips()[1].getHitCount()).toBe(2);
   });
 });
