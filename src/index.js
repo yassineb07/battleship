@@ -13,31 +13,35 @@ const player1 = Player('player1', GameBoard());
 const player2 = Player('computer', GameBoard());
 let currentPlayer = 1;
 
-const ships = [
+const playerShips = [
   Ship('ship1', 1),
   Ship('ship2', 2),
-  //Ship('ship3', 3),
-  //Ship('ship4', 4),
+  Ship('ship3', 3),
+  Ship('ship4', 4),
+];
+const computerShips = [
+  Ship('ship1', 1),
+  Ship('ship2', 2),
+  Ship('ship3', 3),
+  Ship('ship4', 4),
 ];
 
-const initShips = () => {
-  player1.placeShip(ships[0], [0, 0]);
-  player1.placeShip(ships[1], [1, 3]);
-  //player1.placeShip(ships[2], [4, 4]);
-  //player1.placeShip(ships[3], [8, 1]);
-
-  player2.placeShip(ships[0], [8, 7]);
-  player2.placeShip(ships[1], [1, 3]);
-  //player2.placeShip(ships[2], [3, 3]);
-  //player2.placeShip(ships[3], [6, 3]);
+const initComputerShips = () => {
+  player2.placeShip(computerShips[0], [8, 7]);
+  player2.placeShip(computerShips[1], [1, 3]);
+  player2.placeShip(computerShips[2], [3, 3]);
+  player2.placeShip(computerShips[3], [6, 3]);
 };
 
 const initGame = () => {
-  initShips();
+  initComputerShips();
+  dom.clearBoard(player1BoardEl);
+  dom.clearBoard(player2BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
   dom.renderBoard(player2BoardEl, player2.getBoard());
   dom.enableBoard(player2BoardEl);
   dom.disableBoard(player1BoardEl);
+  dom.showGameStatus('Game Started');
 };
 
 const computerPlay = () => {
@@ -70,20 +74,29 @@ const switchTurn = () => {
   }
 };
 
-/* player1BoardEl.addEventListener('click', (e) => {
-  if (currentPlayer !== 2) return;
+let placingShips = true;
+const placeShips = (e) => {
+  if (!placingShips) return;
   const coord = e.target.id.split(',').map(Number);
-  player1.receiveAttack(coord);
+  player1.placeShip(playerShips[0], coord);
+  if (!player1.getShips().includes(playerShips[0])) return;
+  playerShips.shift();
   dom.clearBoard(player1BoardEl);
   dom.renderBoard(player1BoardEl, player1.getBoard());
-  if (player1.hasLost()) {
-    dom.displayWinner(player2.getName());
-    dom.disableBoard(player1BoardEl);
-    dom.disableBoard(player2BoardEl);
-    return;
+  if (playerShips.length === 0) {
+    placingShips = false;
+    player1BoardEl.removeEventListener('click', placeShips);
+    initGame();
   }
-  switchTurn();
-}); */
+};
+
+// start game
+
+dom.renderBoard(player1BoardEl, player1.getBoard());
+dom.renderBoard(player2BoardEl, player2.getBoard());
+dom.showGameStatus('Place your ships');
+
+player1BoardEl.addEventListener('click', placeShips);
 
 player2BoardEl.addEventListener('click', (e) => {
   if (currentPlayer !== 1) return;
@@ -92,7 +105,7 @@ player2BoardEl.addEventListener('click', (e) => {
   dom.clearBoard(player2BoardEl);
   dom.renderBoard(player2BoardEl, player2.getBoard());
   if (player2.hasLost()) {
-    dom.displayWinner(player1.getName());
+    dom.showGameStatus(`${player1.getName()} Wins`);
     dom.disableBoard(player1BoardEl);
     dom.disableBoard(player2BoardEl);
     return;
@@ -104,5 +117,3 @@ player2BoardEl.addEventListener('click', (e) => {
 resetBtn.addEventListener('click', () => {
   location.reload();
 });
-
-initGame();
