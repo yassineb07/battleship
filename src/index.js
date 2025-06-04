@@ -27,10 +27,14 @@ const computerShips = [
 ];
 
 const initComputerShips = () => {
-  player2.placeShip(computerShips[0], [8, 7]);
-  player2.placeShip(computerShips[1], [1, 3]);
-  player2.placeShip(computerShips[2], [3, 3]);
-  player2.placeShip(computerShips[3], [6, 3]);
+  let x, y;
+  do {
+    x = Math.floor(Math.random() * 10);
+    y = Math.floor(Math.random() * 10);
+    player2.placeShip(computerShips[0], [x, y]);
+    if (!player2.getShips().includes(computerShips[0])) continue;
+    computerShips.shift();
+  } while (computerShips.length > 0);
 };
 
 const initGame = () => {
