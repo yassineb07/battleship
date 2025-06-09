@@ -8,6 +8,8 @@ const dom = Dom();
 const player1BoardEl = document.getElementById('player1GameBoardEl');
 const player2BoardEl = document.getElementById('player2GameBoardEl');
 const resetBtn = document.getElementById('resetBtn');
+const player1NameEl = document.getElementById('player1NameEl');
+const player2NameEl = document.getElementById('player2NameEl');
 
 const player1 = Player('player1', GameBoard());
 const player2 = Player('computer', GameBoard());
@@ -73,9 +75,13 @@ const computerPlay = () => {
 const switchTurn = () => {
   currentPlayer = currentPlayer === 1 ? 2 : 1;
   if (currentPlayer === 1) {
+    dom.hideCurrentPlayer(player2NameEl);
+    dom.showCurrentPlayer(player1NameEl);
     dom.enableBoard(player2BoardEl);
     dom.disableBoard(player1BoardEl);
   } else {
+    dom.hideCurrentPlayer(player1NameEl);
+    dom.showCurrentPlayer(player2NameEl);
     dom.enableBoard(player1BoardEl);
     dom.disableBoard(player2BoardEl);
   }

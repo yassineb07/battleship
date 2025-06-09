@@ -131,6 +131,10 @@ section {
   font-weight: 700;
 }
 
+.current-player {
+  transform: scale(1.1);
+}
+
 .game-board {
   border: solid black 2px;
   display: grid;

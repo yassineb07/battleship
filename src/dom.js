@@ -45,6 +45,14 @@ const Dom = () => {
     notifTextEl.textContent = message;
   };
 
+  const showCurrentPlayer = (playerEl) => {
+    playerEl.classList.add('current-player');
+  };
+
+  const hideCurrentPlayer = (playerEl) => {
+    playerEl.classList.remove('current-player');
+  };
+
   return {
     clearBoard,
     enableBoard,
@@ -52,6 +60,8 @@ const Dom = () => {
     renderBoard,
     renderShots,
     showGameStatus,
+    showCurrentPlayer,
+    hideCurrentPlayer,
   };
 };
 
